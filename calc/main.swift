@@ -9,6 +9,20 @@
 import Foundation
 
 var args = ProcessInfo.processInfo.arguments
-args.removeFirst() // remove the name of the program
 
-print(Int(args[0])!)
+// Remove the first element (program name)
+args.removeFirst()
+
+// Check if there are enough arguments
+if args.count < 3 {
+    print("Error: Invalid number of arguments.")
+    exit(1)
+}
+
+// Print the first number to match the example provided
+if let firstNumber = Int(args[0]) {
+    print(firstNumber)
+} else {
+    print("Error: Invalid first number.")
+    exit(1)
+}

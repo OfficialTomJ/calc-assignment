@@ -27,25 +27,45 @@ if args.count < 3 {
 func calculate(_ left: Int, _ right: Int, operation: String) -> Int? {
     switch operation {
     case "+":
+        if (right > 0 && left > Int.max - right) || (right < 0 && left < Int.min - right) {
+            print("Error: Integer overflow.")
+            exit(1)
+        }
         return left + right
+
     case "-":
+        if (right < 0 && left > Int.max + right) || (right > 0 && left < Int.min + right) {
+            print("Error: Integer underflow.")
+            exit(1)
+        }
         return left - right
+
     case "x":
+        // Check for integer overflow and underflow before performing multiplication
+        if left != 0 && right != 0 {
+            if (left > 0 && right > 0 && left > Int.max / right) ||  // Positive * positive overflow
+               (left < 0 && right < 0 && left < Int.max / right) ||  // Negative * negative overflow
+               (left > 0 && right < 0 && right < Int.min / left) ||  // Positive * negative underflow
+               (left < 0 && right > 0 && left < Int.min / right) {   // Negative * positive underflow
+                print("Error: Integer overflow.")
+                exit(1)
+            }
+        }
         return left * right
     case "/":
-        // Check for division by zero
         if right == 0 {
             print("Error: Division by zero.")
             exit(1)
         }
         return left / right
+
     case "%":
-        // Check for modulus by zero
         if right == 0 {
             print("Error: Modulus by zero.")
             exit(1)
         }
         return left % right
+
     default:
         print("Error: Invalid operator.")
         exit(1)

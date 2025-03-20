@@ -11,6 +11,12 @@ import Foundation
 var args = ProcessInfo.processInfo.arguments
 args.removeFirst()
 
+// If only one argument is provided, simply print it
+if args.count == 1, let number = Int(args[0]) {
+    print(number)
+    exit(0)
+}
+
 // Check for valid input length
 if args.count < 3 {
     print("Error: Invalid number of arguments.")
